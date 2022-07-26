@@ -6,16 +6,33 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
+        return view('contents.home.index');
     }
 
-    public function index() {
-        return view('/');
+    public function about()
+    {
+        return view('contents.home.about');
     }
 
-    public function adminHome()  {
-        return view('contents.dashboard.index');
+    public function contact()
+    {
+        return view('contents.home.contact');
+    }
+
+    public function service()
+    {
+        return view('contents.home.service');
+    }
+
+    public function register()
+    {
+        return view('contents.home.register');
+    }
+
+    public function information()
+    {
+        return view('contents.home.information');
     }
 }
