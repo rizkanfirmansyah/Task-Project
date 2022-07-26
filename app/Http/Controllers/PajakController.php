@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
-use PDF;
 
-class UserController extends Controller
+class PajakController extends Controller
 {
-    //
     public function index()
     {
-        $title = 'User Page';
-        return view('contents.dashboard.user', compact('title'));
+        $title = 'Tax Page';
+        return view('contents.dashboard.pajak', compact('title'));
     }
 
     /**
@@ -26,34 +23,22 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (empty($_GET['status'])) {
-            $data = User::all();
-        }else{
-            if($_GET['status'] == 'trash'){
-                $data = User::onlyTrashed();
-            }else{
-                $data = DB::table('users')->where('deleted_at', null)->where('status', $_GET['status'])->get();
-            }
-        }
+        $data = Tax::all();
         return DataTables::of($data)
-            ->addColumn('action', function ($user) {
+            ->addColumn('action', function ($tax) {
                 $category = '
-                    <a class="btn btn-sm btn-danger Delete" data-id="' . $user->id . '"><i class="fas fa-trash"></i></a>
-                    <a class="btn btn-sm btn-warning Edit" data-id="' . $user->id . '"><i class="fas fa-edit"></i></a>
+                    <a class="btn btn-sm btn-danger Delete" data-id="' . $tax->id . '"><i class="fas fa-trash"></i></a>
+                    <a class="btn btn-sm btn-warning Edit" data-id="' . $tax->id . '"><i class="fas fa-edit"></i></a>
                     ';
                 return $category;
             })
-            ->addColumn('check', function ($user) {
-                return InputElement('checkbox', $user->id);
+            ->addColumn('check', function ($tax) {
+                return InputElement('checkbox', $tax->id);
             })
-            ->editColumn('created_at', function ($user) {
-                return FormatDate($user->created_at);
+            ->editColumn('created_at', function ($tax) {
+                return FormatDate($tax->created_at);
             })
-            ->editColumn('status', function ($user) {
-                $checked = $user->status == 'Y' ? 'checked' : '';
-                return '<input type="checkbox" class="input-toggle" ' . $checked . ' data-value="' . $user->id . '"> ';
-            })
-            ->rawColumns(['check', 'action', 'status'])->make(true);
+            ->rawColumns(['check', 'action'])->make(true);
     }
 
     /**
@@ -65,17 +50,24 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $err = Validator::make($request->all(), [
-            'name' => 'required|unique:users|max:255',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required',
-            'role' => 'required',
+            'tipe_pajak' => 'required',
+            'deskripsi' => 'required|',
+            'penghasilan' => 'required',
         ]);
 
         if ($err->fails()) {
             return response()->json(['message' => 'Data gagal diinput', 'data' => $err->errors()], 500);
         }
         $request->request->add(['created_by' => 'admin']);
-        User::create($request->all());
+        // Tax::create($request->all());
+        if ($request->penghasilan > 54000000) {
+            $jumlah = ($request->penghasilan * 5) / 100;
+            $tax = new Tax(['tipe_pajak' => $request->tipe_pajak, 'deskripsi' => $request->deskripsi, 'penghasilan' => $request->penghasilan, 'jumlah_pajak' => $jumlah]);
+            $tax->save();
+        }else {
+            $tax = new Tax(["tipe_pajak" => $request->tipe_pajak, "deskripsi" => $request->deskripsi, "penghasilan" => $request->penghasilan, "jumlah_pajak" => 'Rp. '.$jumlah.'(Wajib Pajak)']);
+            $tax->save();
+        }
         return response()->json(['message' => 'Data berhasil diinput', 'data' => $request->all()], 200);
     }
 
@@ -88,10 +80,10 @@ class UserController extends Controller
     public function show()
     {
         $data = [
-            "all" => User::all()->count(),
-            "active" => User::where("status", "Y")->count(),
-            "inactive" => User::where("status", "N")->count(),
-            "trash" => User::onlyTrashed()->count(),
+            "all" => Tax::all()->count(),
+            // "active" => User::where("status", "Y")->count(),
+            // "inactive" => User::where("status", "N")->count(),
+            // "trash" => User::onlyTrashed()->count(),
         ];
         return response()->json(['message' => 'Data berhasil diinput', 'data' => $data], 200);
     }
@@ -104,7 +96,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $data = User::find($id);
+        $data = Tax::find($id);
         if ($data === null) {
             return response()->json(['message' => 'Data tidak ditemukan', 'error' => 'Value not null'], 500);
         }
@@ -121,16 +113,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = User::find($id);
+        $data = Tax::find($id);
         if ($data === null) {
             return response()->json(['message' => 'Data tidak ditemukan', 'error' => 'Value not null'], 500);
         }
 
         $validated = Validator::make($request->all(), [
-            'name' => 'required|max:255|unique:users,name,' . $id,
-            'email' => 'required|max:255|unique:users,email,' . $id,
-            'password' => 'required',
-            'role' => 'required',
+            'tipe_pajak' => 'required' . $id,
+            'deskripsi' => 'required' . $id,
+            'penghasilan' => 'required',
         ]);
 
         if ($validated->fails()) {
@@ -150,14 +141,14 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        $data = User::find($request->data);
+        $data = Tax::find($request->data);
         if ($data === null) {
             return response()->json(['message' => 'Data tidak ditemukan', 'error' => 'Value not null'], 500);
         }
 
         if (is_array($request->data)) {
             foreach ($request->data as $value) {
-                $data = User::find($value);
+                $data = Tax::find($value);
                 $data->delete();
             }
         }else{
@@ -166,24 +157,4 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Data berhasil dihapus', 'data' => $data], 200);
     }
-
-    public function change(Request $request)
-    {
-        if ($request->value === null) {
-            return response()->json(['message' => 'Data tidak ditemukan', 'error' => 'Value not null'], 500);
-        }
-        $data = User::find($request->value);
-        $data->update(['status' => $data->status == 1 ? '0' : '1']);
-
-        return response()->json(['message' => 'Data berhasil diperbaharui', 'data' => $data], 200);
-    }
-
-    public function cetak_pdf()
-{
-	$data = User::with('tax')->get();
-    $data2 = Tax::with('user')->get();
- 
-	$pdf = PDF::loadview('pajakPrint_pdf',['pajakPrint'=>$data, 'pajakPrint2'=>$data2]);
-	return $pdf->download('laporan-pajak-pdf');
-}
 }

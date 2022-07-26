@@ -163,7 +163,7 @@
                         alt="Admin" /> <span class="text-dark">Admin</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="{{route('logout')}}">Log out</a>
+                    <a class="dropdown-item" href="{{route('signout')}}">Log out</a>
                 </div>
             </li>
         </ul>

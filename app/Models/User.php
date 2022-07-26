@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -47,4 +49,22 @@ class User extends Authenticatable
     protected $dates = [
         'deleted_at'
     ];
+
+    protected function role(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  ["user", "admin", "root"][$value],
+        );
+    }
+
+    public function tax()
+    {
+        return $this->hasOne(Tax::class);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
 }

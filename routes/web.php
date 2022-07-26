@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomAuthController;
+// use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\PajakController;
 use App\Http\Controllers\ChallengeDetailController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
@@ -23,15 +25,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/auth/login', [AuthController::class, 'index'])->name('login');
-Route::post('/auth/login/post', [AuthController::class, 'login'])->name('login-in');
-Route::get('/auth/logout', [AuthController::class, 'destroy'])->name('logout');
+Auth::routes();
+Route::get('/', function () {
+    return view('index')->name('home');
+});
 
-Route::middleware(['auth'])->group(function () {
 
-Route::get('/dashboard', function () {
-    return view('contents.dashboard.index');
-})->name('dashboard');
+// Route::get('/auth/login', [loginController::class, 'index'])->name('login');
+// Route::post('/auth/login/post', [loginController::class, 'login'])->name('login-in');
+// Route::get('/auth/logout', [AuthController::class, 'destroy'])->name('logout');
+// Route::get('auth/register', [AuthController::class, 'daftar'])->name('index-register');
+// Route::post('auth/register/post', [AuthController::class, 'register'])->name('register');
+
+// Route::middleware(['auth'])->group(function () {
+
+// Route::middleware(['auth', 'user-access:user'])->group(function () {
+//     Route::get('/', function () {
+//         return view('index');
+//     });
+// });
+
+
+    Route::middleware(['auth', 'user-access:admin'])->group(function () {
+        Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard'); 
+    });
+
+    Route::get('login', [CustomAuthController::class, 'index'])->name('login');
+    Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
+    Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
+    Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom'); 
+    Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+  
 
     Route::prefix('section')->group(function () {
         Route::get('/', [SectionController::class, 'index'])->name('section');
@@ -51,7 +75,19 @@ Route::get('/dashboard', function () {
         Route::get('/show', [UserController::class, 'show'])->name('user-show');
         Route::post('/', [UserController::class, 'store'])->name('user-store');
         Route::post('/{id}', [UserController::class, 'update'])->name('user-update')->where('id', '[0-9]+');
+        Route::get('/cetak', [UserController::class, 'cetak_pdf'])->name('user-print');
         Route::delete('/', [UserController::class, 'destroy'])->name('user-destroy');
+        Route::put('/change/status', [UserController::class, 'change'])->name('user-change');
+    });
+
+    Route::prefix('taxes')->group(function () {
+        Route::get('/', [PajakController::class, 'index'])->name('taxes');
+        Route::get('/{id}', [PajakController::class, 'edit'])->name('taxes-edit')->where('id', '[0-9]+');
+        Route::get('/create', [PajakController::class, 'create'])->name('taxes-create');
+        Route::get('/show', [PajakController::class, 'show'])->name('taxes-show');
+        Route::post('/', [PajakController::class, 'store'])->name('taxes-store');
+        Route::post('/{id}', [PajakController::class, 'update'])->name('taxes-update')->where('id', '[0-9]+');
+        Route::delete('/', [PajakController::class, 'destroy'])->name('taxes-destroy');
     });
 
     Route::prefix('question')->group(function () {
@@ -73,4 +109,4 @@ Route::get('/dashboard', function () {
         Route::post('/{id}', [ChallengeDetailController::class, 'update'])->name('challenge-detail-update')->where('id', '[0-9]+');
         Route::delete('/', [ChallengeDetailController::class, 'destroy'])->name('challenge-detail-destroy');
     });
-});
+// });

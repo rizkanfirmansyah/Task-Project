@@ -17,7 +17,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-    <title>60 Day Dashboard</title>
+    <title>Tax Dashboard</title>
 
     @include('includes.style')
 

@@ -33,9 +33,9 @@
                     <div class="d-table-cell align-middle">
 
                         <div class="text-center mt-4">
-                            <h1 class="h2">Welcome back, Admin</h1>
+                            <h1 class="h2">Welcome to Tax Apps</h1>
                             <p class="lead">
-                                Sign in to your account to continue
+                                Sign in or Sign up to your account to continue
                             </p>
                         </div>
                         @yield('content')

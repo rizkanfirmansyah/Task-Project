@@ -17,7 +17,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-    <title>Regalia Dashboard</title>
+    <title>Tax Dashboard</title>
 
     @include('includes.style')
 
@@ -46,6 +46,8 @@
                                 <span class="align-middle"> Tambah Data</span></button>
                             <button class="btn" disabled id="deleteData"><i class="align-middle"
                                     data-feather="trash"></i> <span class="align-middle"> Hapus Data</span></button>
+                            <a href="{{ route('user-print') }}" class="btn" disabled ><i class="align-middle"
+                                    data-feather="print"></i> <span class="align-middle"> Cetak Data</span></a>
                         </div>
                     </div>
 
