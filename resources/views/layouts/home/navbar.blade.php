@@ -16,7 +16,10 @@
                 <li><a href="<?= route('homepage-about') ?>">Tentang Kami</a></li>
                 <li><a href="<?= route('homepage-service') ?>">Layanan Kami</a></li>
                 <li><a href="<?= route('homepage-contact') ?>">Kontak Kami</a></li>
+                <li><a href="<?= route('profile') ?>">Profile</a></li>
+                @if (!Auth::user())
                 <li><a class="get-a-quote" href="<?= route('homepage-register') ?>">Daftar</a></li>
+                @endif
             </ul>
         </nav><!-- .navbar -->
 

@@ -28,7 +28,7 @@ class CustomAuthController extends Controller
             }else if (auth()->user()->role == 'root') {
                 return redirect()->route('dashboard-root');
             }else{
-                return redirect("/");
+                return redirect()->route('homepage');
             }
         }else{
             return redirect()->route('login')
@@ -52,7 +52,7 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
          
-        return redirect("/")->withSuccess('You have signed-in');
+        return redirect()->route('homepage')->withSuccess('You have signed-in');
     }
 
     public function create(array $data)

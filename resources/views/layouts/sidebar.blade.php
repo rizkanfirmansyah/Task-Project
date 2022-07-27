@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">Tax Dashboard</span>
+            <span class="align-middle">Pajak.IN</span>
         </a>
 
         <ul class="sidebar-nav">

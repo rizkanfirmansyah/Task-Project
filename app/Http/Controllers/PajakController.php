@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tax;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class PajakController extends Controller
 {
     public function index()
     {
         $title = 'Tax Page';
-        return view('contents.dashboard.pajak', compact('title'));
+        $users = User::all();
+        return view('contents.dashboard.pajak', compact('title', 'users'));
     }
 
     /**
@@ -50,6 +53,7 @@ class PajakController extends Controller
     public function store(Request $request)
     {
         $err = Validator::make($request->all(), [
+            'user_id' => 'required',
             'tipe_pajak' => 'required',
             'deskripsi' => 'required|',
             'penghasilan' => 'required',
@@ -59,15 +63,15 @@ class PajakController extends Controller
             return response()->json(['message' => 'Data gagal diinput', 'data' => $err->errors()], 500);
         }
         $request->request->add(['created_by' => 'admin']);
-        // Tax::create($request->all());
-        if ($request->penghasilan > 54000000) {
-            $jumlah = ($request->penghasilan * 5) / 100;
-            $tax = new Tax(['tipe_pajak' => $request->tipe_pajak, 'deskripsi' => $request->deskripsi, 'penghasilan' => $request->penghasilan, 'jumlah_pajak' => $jumlah]);
-            $tax->save();
-        }else {
-            $tax = new Tax(["tipe_pajak" => $request->tipe_pajak, "deskripsi" => $request->deskripsi, "penghasilan" => $request->penghasilan, "jumlah_pajak" => 'Rp. '.$jumlah.'(Wajib Pajak)']);
-            $tax->save();
-        }
+        Tax::create($request->all());
+        // if ($request->penghasilan > 54000000) {
+        //     $jumlah = ($request->penghasilan * 5) / 100;
+        //     $tax = new Tax(['tipe_pajak' => $request->tipe_pajak, 'deskripsi' => $request->deskripsi, 'penghasilan' => $request->penghasilan, 'jumlah_pajak' => $jumlah]);
+        //     $tax->save();
+        // }else {
+        //     $tax = new Tax(["tipe_pajak" => $request->tipe_pajak, "deskripsi" => $request->deskripsi, "penghasilan" => $request->penghasilan, "jumlah_pajak" => 'Rp. '.$jumlah.'(Wajib Pajak)']);
+        //     $tax->save();
+        // }
         return response()->json(['message' => 'Data berhasil diinput', 'data' => $request->all()], 200);
     }
 
@@ -156,5 +160,14 @@ class PajakController extends Controller
         }
 
         return response()->json(['message' => 'Data berhasil dihapus', 'data' => $data], 200);
+    }
+
+    public function cetak_pdf()
+    {
+        // $data = User::with('tax')->get();
+        $data = Tax::all();
+     
+        $pdf = PDF::loadview('pajakPrint_pdf',['pajakPrint'=>$data]);
+        return $pdf->download('laporan-pajak-pdf');
     }
 }

@@ -16,14 +16,10 @@
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Nama</th>
-				<th>Email</th>
-				<th>Role</th>
 				<th>Tipe Pajak</th>
 				<th>Deskripsi</th>
 				<th>Penghasilan</th>
 				<th>Jumlah Pajak</th>
-
 			</tr>
 		</thead>
 		<tbody>
@@ -31,10 +27,10 @@
 			@foreach($pajakPrint as $p)
 			<tr>
 				<td>{{ $i++ }}</td>
-				<td>{{$p->name}}</td>
-				<td>{{$p->email}}</td>
-				<td>{{$p->role}}</td>
-				<td>{{$p->tax->deskripsi}}</td>
+				<td>{{$p->tipe_pajak}}</td>
+				<td>{{$p->deskripsi}}</td>
+				<td>{{$p->penghasilan}}</td>
+				<td>{{$p->jumlah_pajak}}</td>
 				
 			</tr>
 			@endforeach

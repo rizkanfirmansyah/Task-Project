@@ -26,9 +26,4 @@ class Tax extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function company()
-    {
-        return $this->hasOne(Company::class);
-    }
 }

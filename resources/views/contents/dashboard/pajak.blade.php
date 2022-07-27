@@ -33,6 +33,15 @@
 
 @push('modal')
     <form method="post" action="/taxes" data-title="Input Data Pajak" data-reload="">
+        <div class="input-group mb-3">
+            <select class="form-select @error('user') is-invalid @enderror" id="inputGroupSelect01"
+                name="user_id">
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }}</option>
+                @endforeach
+            </select>
+        </div>
         <div class="mb-3">
             <label for="tipe_pajak" class="form-label">Tipe Pajak</label>
             <input type="text" name="tipe_pajak" class="form-control" id="tipe_pajak" placeholder="Masukkan Tipe Pajak">
@@ -44,6 +53,10 @@
         <div class="mb-3">
             <label for="penghasilan" class="form-label">Penghasilan </label>
             <input type="number" name="penghasilan" class="form-control" id="penghasilan" placeholder="Masukkan penghasilan">
+        </div>
+        <div class="mb-3">
+            <label for="penghasilan" class="form-label">Jumlah Pajak </label>
+            <input type="number" name="jumlah_pajak" class="form-control" id="jumlah_pajak" placeholder="Masukkan jumlah pajak">
         </div>
         <div class="d-flex mt-3 ">
             <button type="submit" class="ms-auto btn btn-primary px-3"> Simpan</button>

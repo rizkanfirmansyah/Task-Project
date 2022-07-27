@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tax;
+use App\Models\Profile;
+use Auth;
+// use Illuminate\Support\Facades\Auth::user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -179,11 +182,21 @@ class UserController extends Controller
     }
 
     public function cetak_pdf()
-{
-	$data = User::with('tax')->get();
-    $data2 = Tax::with('user')->get();
- 
-	$pdf = PDF::loadview('pajakPrint_pdf',['pajakPrint'=>$data, 'pajakPrint2'=>$data2]);
-	return $pdf->download('laporan-pajak-pdf');
-}
+    {
+        $id = Auth::id();
+        $tax = Tax::where('user_id', $id)->get();
+        $profile = Profile::where('user_id', $id)->get();
+    
+        $pdf = PDF::loadview('userPrint_pdf',['tax'=>$tax, 'profile'=>$profile]);
+        return $pdf->download('laporan-pajak-pdf');
+    }
+
+    public function profile()
+    {
+        $id = Auth::id();
+        $tax = Tax::where('user_id', $id)->get();
+        $profile = Profile::where('user_id', $id)->get();
+
+        return view('contents.home.profile', compact('profile', 'tax'));
+    }
 }

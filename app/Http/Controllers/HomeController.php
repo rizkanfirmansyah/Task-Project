@@ -35,4 +35,9 @@ class HomeController extends Controller
     {
         return view('contents.home.information');
     }
+
+    public function profile()
+    {
+        return view('contents.home.profile');
+    }
 }
