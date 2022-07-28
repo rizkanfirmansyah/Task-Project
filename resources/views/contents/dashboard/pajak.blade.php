@@ -1,23 +1,22 @@
 @extends('templates.pages')
 
 @section('content')
-{{-- <a href="{{ route('user-print') }}" class="btn btn-sm btn-primary Cetak"><i class="fas fa-print"></i></a> --}}
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive-sm">
-                        <table class="table table-hover my-0" id="table-user">
+                        <table class="table table-hover my-0" id="table-tax">
                             <thead>
                                 <tr>
                                     <th width="10px"><label class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="checkboxAll"
                                                 onchange="checkboxAll(this)">
                                         </label></th>
-                                    <th>Name</th>
-                                    <th class="d-none d-xl-table-cell">Email</th>
-                                    <th class="d-none d-md-table-cell">Role</th>
-                                    <th class="d-none d-md-table-cell">Status</th>
+                                    <th>Tipe Pajak</th>
+                                    <th class="d-none d-md-table-cell">Deskripsi</th>
+                                    <th class="d-none d-md-table-cell">Penghasilan</th>
+                                    <th class="d-none d-md-table-cell">Jumlah Pajak</th>
                                     <th class="d-none d-md-table-cell">Created At</th>
                                     <th class="d-none d-md-table-cell">Action</th>
                                 </tr>
@@ -33,27 +32,31 @@
 @endsection
 
 @push('modal')
-    <form method="post" action="/users" data-title="Input Data User" data-reload="">
-        <div class="mb-3">
-            <label for="name" class="form-label">Username</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan Username">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Masukkan Password">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Email">
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Deskripsi Section</label>
-            <select name="role" id="role" class="form-control">
-                <option value disabled selected>== Pilih Role ==</option>
-                <option value="1">Admin</option>
-                <option value="2">Staff</option>
-                <option value="3">User</option>
+    <form method="post" action="/taxes" data-title="Input Data Pajak" data-reload="">
+        <div class="input-group mb-3">
+            <select class="form-select @error('user') is-invalid @enderror" id="inputGroupSelect01"
+                name="user_id">
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }}</option>
+                @endforeach
             </select>
+        </div>
+        <div class="mb-3">
+            <label for="tipe_pajak" class="form-label">Tipe Pajak</label>
+            <input type="text" name="tipe_pajak" class="form-control" id="tipe_pajak" placeholder="Masukkan Tipe Pajak">
+        </div>
+        <div class="mb-3">
+            <label for="deskripsi" class="form-label">Deskripsi</label>
+            <input type="text" name="deskripsi" class="form-control" id="deskripsi" placeholder="Masukkan Deskripsi">
+        </div>
+        <div class="mb-3">
+            <label for="penghasilan" class="form-label">Penghasilan </label>
+            <input type="number" name="penghasilan" class="form-control" id="penghasilan" placeholder="Masukkan penghasilan">
+        </div>
+        <div class="mb-3">
+            <label for="penghasilan" class="form-label">Jumlah Pajak </label>
+            <input type="number" name="jumlah_pajak" class="form-control" id="jumlah_pajak" placeholder="Masukkan jumlah pajak">
         </div>
         <div class="d-flex mt-3 ">
             <button type="submit" class="ms-auto btn btn-primary px-3"> Simpan</button>
@@ -71,20 +74,20 @@
 
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'tipe_pajak',
+                    name: 'tipe_pajak'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'deskripsi',
+                    name: 'deskripsi'
                 },
                 {
-                    data: 'role',
-                    name: 'role'
+                    data: 'penghasilan',
+                    name: 'penghasilan'
                 },
                 {
-                    data: 'status',
-                    name: 'status'
+                    data: 'jumlah_pajak',
+                    name: 'jumlah_pajak'
                 },
                 {
                     data: 'created_at',
@@ -95,8 +98,8 @@
                     name: 'action'
                 },
             ],
-            url: '/users/create',
-            table: 'table-user',
+            url: '/taxes/create',
+            table: 'table-tax',
             switch: true,
         }
 

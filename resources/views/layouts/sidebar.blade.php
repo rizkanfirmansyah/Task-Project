@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">60 Day Dashboard</span>
+            <span class="align-middle">Pajak.IN</span>
         </a>
 
         <ul class="sidebar-nav">
@@ -20,6 +20,13 @@
                 <a class="sidebar-link" href="{{route('users')}}">
                     <i class="align-middle" data-feather="users"></i> <span
                         class="align-middle">Users</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{route('taxes')}}">
+                    <i class="align-middle" data-feather="percent"></i> <span
+                        class="align-middle">Pajak</span>
                 </a>
             </li>
 
