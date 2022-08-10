@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaxUserController;
 use App\Models\Challenge;
 use App\Models\Question;
 use Database\Factories\ChallengeDetailFactory;
@@ -43,6 +44,8 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/cetak', [UserController::class, 'cetak_pdf'])->name('user-print');
     Route::get('/information', [HomeController::class, 'information'])->name('homepage-information');
+    Route::post('/information/create', [TaxUserController::class, 'informationCreate'])->name('register.information'); 
+
 });
 
 Route::get('login', [CustomAuthController::class, 'index'])->name('login');
