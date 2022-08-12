@@ -20,7 +20,10 @@ class CreateTaxesTable extends Migration
             $table->string('deskripsi');
             $table->integer('penghasilan');
             $table->string('jumlah_pajak');
-            $table->string('NPWP');
+            $table->int('klasifikasi');
+            $table->string('pekerjaan');
+            $table->string('pernyataan');
+            $table->string('npwp');
             $table->timestamp('deleted_at');
             $table->timestamps();
         });

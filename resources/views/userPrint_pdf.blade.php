@@ -5,8 +5,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <h1 class="text-center" style="font-family: sans-serif; color:blue;">Pajak.IN</h1>
+  <div class="container">
     <div class="card mb-4 mt-5">
         <div class="card-body">
           <div class="row">
@@ -48,10 +47,10 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <p class="mb-0">Address</p>
+              <p class="mb-0">Kebangsaan</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$p->region}}</p>
+              <p class="text-muted mb-0">{{$p->kebangsaan}}</p>
             </div>
           </div>
           <hr>
@@ -59,19 +58,19 @@
           @foreach ($tax as $t)
           <div class="row">
             <div class="col-sm-3">
-              <p class="mb-0">Tipe Pajak</p>
+              <p class="mb-0">NPWP</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$t->tipe_pajak}}</p>
+              <p class="text-muted mb-0">{{$t->npwp}}</p>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <p class="mb-0">Deskripsi</p>
+              <p class="mb-0">Pekerjaan</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$t->deskripsi}}</p>
+              <p class="text-muted mb-0">{{$t->pekerjaan}}</p>
             </div>
           </div>
           <hr>
@@ -80,28 +79,25 @@
               <p class="mb-0">Penghasilan</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$t->penghasilan}}</p>
+              <p class="text-muted mb-0">klasifikasi s/d {{$t->penghasilan}}</p>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <p class="mb-0">Jumlah Pajak</p>
+              <p class="mb-0">Klasifikasi</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$t->jumlah_pajak}}</p>
+              <p class="text-muted mb-0">{{$t->klasifikasi}}</p>
             </div>
           </div>
           <hr>
-          <div class="row">
-            <div class="col-sm-3">
-              <p class="mb-0">Keterangan</p>
-            </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">Dengan ini anda telah menyetujui peraturan pemerintah nomor 23 tahun 2018.
-              </p>
+          <div class="row text-center">
+            <div class="col-sm-3 mx-auto">
+                <a href="{{route('user-print')}}" class="btn btn-primary mx-auto"><span class="fas fa-print"></span>Cetak PDF</a>
             </div>
           </div>
+        </div>
     </div>
   </div>
   @endforeach

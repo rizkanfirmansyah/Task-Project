@@ -19,6 +19,11 @@ class CreateProfilesTable extends Migration
             $table->string('region');
             $table->string('no_kk');
             $table->string('no_handphone');
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
+            $table->string('status_pernikahan');
+            $table->string('gender');
+            $table->string('kebangsaan');
             $table->timestamps();
         });
     }
