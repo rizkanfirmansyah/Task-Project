@@ -74,6 +74,15 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
+              <p class="mb-0">Tipe Pajak</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{$t->tipe_pajak}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
               <p class="mb-0">Pekerjaan</p>
             </div>
             <div class="col-sm-9">
@@ -92,16 +101,17 @@
           <hr>
           <div class="row">
             <div class="col-sm-3">
-              <p class="mb-0">Klasifikasi</p>
+              <p class="mb-0">Alamat Perusahaan</p>
             </div>
             <div class="col-sm-9">
-              <p class="text-muted mb-0">{{$t->klasifikasi}}</p>
+              <p class="text-muted mb-0">{{$t->alamat_kantor}}</p>
             </div>
           </div>
           <hr>
           <div class="row text-center">
             <div class="col-sm-3 mx-auto">
                 <a href="{{route('user-print')}}" class="btn btn-primary mx-auto"><span class="fas fa-print"></span>Cetak PDF</a>
+                <a href="{{route('checkout')}}" class="btn btn-warning mx-auto"><span class="fas fa-wallet"></span>Bayar Pajak</a>
             </div>
           </div>
         </div>
