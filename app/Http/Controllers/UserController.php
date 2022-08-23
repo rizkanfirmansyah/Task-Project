@@ -199,4 +199,13 @@ class UserController extends Controller
 
         return view('contents.home.profile', compact('profile', 'tax'));
     }
+
+    public function checkout()
+    {
+        $id = Auth::id();
+        $tax = Tax::where('user_id', $id)->get();
+        $profile = Profile::where('user_id', $id)->get();
+
+        return view('contents.home.checkout', compact('profile', 'tax'));
+    }
 }

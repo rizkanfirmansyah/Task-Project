@@ -132,11 +132,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <p class="text-end py-3">Klasifikasi Lapangan Usaha</p>
+                                    <p class="text-end py-3">Alamat Tempat Usaha</p>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <input type="text" name="klasifikasi" class="form-control px-3 py-3" id="lapangan_usaha"
-                                        placeholder="">
+                                    <input type="text" name="alamat_kantor" class="form-control px-3 py-3" id="alamat_kantor"
+                                        placeholder="Masukan alamat lengkap perusahaan">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -156,36 +156,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="penghasilan" id="<5jt" value="4500000">
-                                        <label class="form-check-label" for="<5jt">
-                                          Kurang dari Rp. 4.500.000 s/d 4.500.000
-                                        </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="penghasilan" id="10jt" value="10000000">
-                                        <label class="form-check-label" for="10jt">
-                                          Rp. 4.500.000 s/d Rp. 9.999.999
-                                        </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="penghasilan" id="15jt" value="15000000">
-                                        <label class="form-check-label" for="15jt">
-                                          Rp. 10.000.000 s/d Rp. 14.999.999
-                                        </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="penghasilan" id="20jt" value="20000000">
-                                        <label class="form-check-label" for="20jt">
-                                          Rp. 15.000.000 s/d Rp. 19.999.999
-                                        </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="penghasilan" id="20jtlebih" value="21000000">
-                                        <label class="form-check-label" for="20jtlebih">
-                                          Rp. 20.000.000 atau lebih
-                                        </label>
-                                      </div>
+                                    <input type="number" name="penghasilan" class="form-control px-3 py-3 my-3" id="penghasilan"
+                                        placeholder="Rp./Bulan">
                                 </div>
                             </div>
                         </div>
@@ -195,7 +167,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <p class="text-end py-3">Anda adalah Wajib Pajak Orang Pribadi berstatus PUSAT yang tidak melakukan usaha/pekerjaan bebas dengan kategori.</p>
+                                    <p class="text-center py-3">Jika anda berpenghasilan lebih dari Rp.5.000.000 per bulan nya maka anda adalah Wajib Pajak Orang Pribadi berstatus PUSAT yang tidak melakukan usaha/pekerjaan bebas dengan kategori.</p>
                                 </div>
                             </div>
                         </div>

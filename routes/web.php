@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TaxUserController;
 use App\Models\Challenge;
 use App\Models\Question;
@@ -42,8 +43,10 @@ Route::middleware(['auth', 'user-access:user'])->group(function () {
     Route::get('/contact', [HomeController::class, 'contact'])->name('homepage-contact');
     Route::get('/service', [HomeController::class, 'service'])->name('homepage-service');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
     Route::get('/cetak', [UserController::class, 'cetak_pdf'])->name('user-print');
     Route::get('/information', [HomeController::class, 'information'])->name('homepage-information');
+    Route::post('/checkout/create', [CheckoutController::class, 'checkoutCreate'])->name('checkout-post');
     Route::post('/information/create', [TaxUserController::class, 'informationCreate'])->name('register.information'); 
 
 });

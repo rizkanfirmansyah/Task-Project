@@ -25,7 +25,7 @@ class TaxUserController extends Controller
             'kebangsaan' => 'required',
             'no_handphone' => 'required',
             'no_kk' => 'required',
-            'klasifikasi' => 'required',
+            'alamat_kantor' => 'required',
             'pekerjaan' => 'required',
             'penghasilan' => 'required',
             'pernyataan' => 'required',
@@ -35,8 +35,15 @@ class TaxUserController extends Controller
             return response()->json(['message' => 'Data gagal diinput', 'data' => $err->errors()], 500);
         }
             $user_id = Auth::user()->id;
+            $penghasilan = $request->penghasilan;
+            $jumlah_pajak = ($penghasilan * 5) /100;
+            if($penghasilan > 5000000){
+                $tipe = "Wajib Pajak";
+            }else{
+                $tipe = "Tidak Wajib Pajak";
+            }   
            
-            $tax = new Tax(['user_id' => Auth::user()->id, 'penghasilan' => $request->penghasilan,  'klasifikasi' => $request->klasifikasi, 'pekerjaan' => $request->pekerjaan, 'pernyataan' => $request->pernyataan, 'npwp' => $user_id.$request->klasifikasi]);
+            $tax = new Tax(['user_id' => Auth::user()->id, 'penghasilan' => $penghasilan,  'alamat_kantor' => $request->alamat_kantor, 'pekerjaan' => $request->pekerjaan, 'pernyataan' => $request->pernyataan, 'jumlah_pajak' => $jumlah_pajak, 'tipe_pajak' => $tipe, 'npwp' => $user_id.$request->no_kk]);
             $tax->save();
             $profile = new Profile(['user_id' => Auth::user()->id, 'kebangsaan' => $request->kebangsaan, 'no_kk' => $request->no_kk, 'no_handphone' => $request->no_handphone, 'tempat_lahir' => $request->tempat_lahir, 'tanggal_lahir' => $request->tanggal_lahir, 'status_pernikahan' => $request->status_pernikahan, 'gender' => $request->gender]);
             $profile->save();

@@ -15,7 +15,7 @@ class Tax extends Model
         'deskripsi',
         'penghasilan',
         'jumlah_pajak',
-        'klasifikasi',
+        'alamat_kantor',
         'pekerjaan',
         'pernyataan',
         'npwp',
